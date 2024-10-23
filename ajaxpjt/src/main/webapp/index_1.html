@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="js/jquery-3.7.1.js"></script>
+	<script>
+		function firstAjaxFn() {
+			// 첫번쨰 ajax 통신 클릭 시 호출
+			
+			// first.html ajax 요청 보내기
+			// 1. XMLHttpRequest 객체 생성하기
+			let request = new XMLHttpRequest();
+			
+			// *XMLHttpRequest 객체 상태 변경 시 호출되는 메소드 정의 수정
+			// 요청에 대한 응답이 온 후 처리할 수 있도록(미리 등록)
+			request.onreadystatechange = function() {
+				// XMLHttpRequest 객체 상태 변경 될 때마다 호출
+				let state = request.readyState; // XMLHttpRequest 객체 상태값
+				let status = request.status; // 요청에 대한 응답의 상태 코드값 반환
+				
+				if(state == 4 && status == 200) {
+					// 4. 응답데이터 받기(응답데이터 : 요청 경로를 실행했을 때 화면에 출력되는 내용)
+					let data = request.responseText;
+					
+					console.log(data);
+					document.getElementById("result").innerHTML = data;
+				}
+			}
+			
+			// 2. 생성된 XMLHttpRequest 객체에 open 메소드 호출하여 정보 넘기기
+			// 3번째 인자가 false이면 요청에 대한 응답을 기다린 후 처리
+			//			 true이면  요청에 대한 응답을 기다리지 않고 실행
+			request.open('GET', 'data/first.html', false);
+			
+			// 3. open에서 정의한 정보로 요청 보내기
+			request.send();
+		}
+		
+		function infoAjaxFn() {
+			
+			// 여기 ajax 통신에 위에서 처럼 예외처리를 해보세요.
+			let request = new XMLHttpRequest();
+			
+			request.onreadystatechange = function() {
+				
+				if(request.readyState == 4 && request.status == 200) {
+					let data = request.responseText;
+					document.getElementById("result").innerHTML = data;
+				}
+			}
+			request.open('GET', 'data/info.html', false);
+			request.send();
+		}
+		
+		function firstAjaxByJQueryFn() {
+			$.ajax({
+				url : "data/first.html",
+				type : "get",
+				success : function(data) {
+					console.log(data);
+					$("#result").html(data);
+				}
+			});
+		}
+		
+		function infoAjaxByJQueryFn() {
+			$.ajax({
+				url : "data/info.html",
+				type : "get",
+				success : function (data) {
+					$("#result").html(data);
+				}
+			});
+		}
+	</script>
+	</head>
+	<body>
+		<h1>ajax 공부 페이지</h1>
+		<button onclick="firstAjaxFn()">첫번째 ajax 통신</button>
+		<br>
+		<button onclick="infoAjaxFn()">소개 불러오기(비동기)</button>
+		<br>
+		<button onclick="firstAjaxByJQueryFn()">jQuery를 사용하여 ajax 통신</button>
+		<br>
+		<button onclick="infoAjaxByJQueryFn()">jQuery를 사용하여 info 통신</button>
+		<!-- jQuery를 사용하여 info 통신 버튼 클릭 시 jQuery를
+		사용하여 ajax 통신하여 info.html 데이터를 id result 요소에
+		출력하세요. -->
+		<div id="result"></div>
+	</body>
+</html>

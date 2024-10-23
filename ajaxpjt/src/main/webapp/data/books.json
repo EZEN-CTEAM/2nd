@@ -1,0 +1,18 @@
+ [
+ 	{
+ 		"name" : "이것이 자바다",
+ 		"publisher" : "한빛미디어",
+ 		"author" : "홍길동",
+ 		"price" : "34,000원" 
+ 	}, {
+ 		"name" : "이것이 MySql이다",
+ 		"publisher" : "한빛미디어",
+ 		"author" : "김길동",
+ 		"price" : "30,000원"
+ 	}, {
+ 		"name" : "명품 웹 프로그래밍",
+ 		"publisher" : "명품미디어",
+ 		"author" : "박길동",
+ 		"price" : "32,000원"
+ 	}
+ ]

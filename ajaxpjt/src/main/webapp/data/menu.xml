@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<menus>
+	<menu>
+		<name>커피류</name>
+		<submenu>
+			<name>아메리카노</name>
+			<price>2,000원</price>
+		</submenu>
+		<submenu>
+			<name>카페라떼</name>
+			<price>3,000원</price>
+		</submenu>
+		<submenu>
+			<name>카푸치노</name>
+			<price>3,500원</price>
+		</submenu>
+	</menu>
+</menus>

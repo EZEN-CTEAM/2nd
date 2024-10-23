@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<script src="js/jquery-3.7.1.js"></script>
+	</head>
+	<body>
+		<h2>ajax를 활욜하여 요청페이지로 파라미터 보내기</h2>
+		
+		<button onclick="clickfn()">클릭!!</button>
+		<script>
+			function clickfn() {
+				$.ajax({
+					url : "data/sample.jsp",
+					type : "get",
+					data : "data1=sample&data2=hong",
+					success : function(data) {
+						console.log(data.trim());
+					}
+				});
+			}
+		</script>
+		
+		<h2>ajax를 통하여 아이디 중복체크하기</h2>
+		
+		id : <input type="text" id="id" onkeyup="checkID()">
+		<button> <!-- onclick="checkID()" -->아이디 중복 체크</button>
+		<br>
+		<div id="idCheckResult"></div>
+		
+		<script>
+			function checkID() {
+				// 사용자가 입력한 아이디가 DB에 중복여부 확인하기
+				let value = $("#id").val(); // id가 id인 input 태그에 값을 가져오기 val()
+				$.ajax({
+					url : "checkID.jsp",
+					type : "get",
+					data : "id=" + value, // 요청페이지로 파라미터를 보냄
+					success : function(data) {
+						if(data.trim() == "isId") {
+							$("#idCheckResult").html("사용할 수 없는 아이디입니다.");
+						} else {
+							$("#idCheckResult").html("사용할 수 있는 아이디입니다.");
+						}
+					}
+				});
+			}
+		</script>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</body>
+</html>

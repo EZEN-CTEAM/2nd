@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<script src="js/jquery-3.7.1.js"></script>
+		<script>
+			function callBooksXML() {
+				$.ajax({
+					url : "data/books.xml",
+					type : "get",
+					success : function(xml) {
+						// console.log(xml);
+						let xml_ = $(xml); // document 객체를 jQuery 객체로 변환
+						let books = xml_.find("books").children("book"); // javascript에서는 .content
+						console.log(books);
+						
+						let html = "";
+						html += '<table border="1">';
+						
+						books.each(function() {
+							let name = $(this).children("name").text();
+							let publisher = $(this).children("publisher").text();
+							let author = $(this).children("author").text();
+							let price = $(this).children("price").text();
+							
+							html += "<tr>";
+							html += "<td>" + name + "</td>";
+							html += "<td>" + publisher + "</td>";
+							html += "<td>" + author + "</td>";
+							html += "<td>" + price + "</td>";
+							html += "</tr>";
+						});
+						
+						html += '</table>';
+						$("#booksList").html(html);
+					}
+				});	
+			}
+		</script>
+	</head>
+	<body>
+		<h1>xml과 json 데이터 ajax로 다루기</h1>
+		<button onclick="callBooksXML()">books xml 요청</button>
+		<div id="booksList"></div>
+		
+		
+		<button onclick="callMenuXML()">menu xml 요청</button>
+		<div id="menuList">
+		<!-- menu xml 요청 클릭 시 아래 테이블처럼 그려질 수 있도록
+		jQuery ajax를 사용하여 완성하세요. -->
+		</div>
+		<script>
+		function callMenuXML() {
+			$.ajax({
+				url : "data/menu.xml",
+				type : "get",
+				success : function(xml) {
+					let xml_ = $(xml);
+					let caption = xml_.find("menu").children("name").text();
+					
+					let submenus = xml_.find("menu").children("submenu");
+					
+					let html = "";
+					html += '<table border="1">';
+					html += "<caption>" + caption + "</caption>";
+					html += "<tr><th>이름</th><th>가격</th></tr>";
+					
+					submenus.each(function() {
+						let name = $(this).children("name").text();
+						let price = $(this).children("price").text();
+						
+						html += "<tr>";
+						html += "<td>" + name + "</td>";
+						html += "<td>" + price + "</td>";
+						html += "</tr>";
+					});
+					
+					html += "</table>";
+					$("#menuList").html(html);
+				}
+			});
+		}
+		</script>
+			
+			
+		<button onclick="callBooksJSON()">books json 요청</button>
+		<div id="booksListJSON"></div>
+		<script>
+			function callBooksJSON() {
+				$.ajax({
+					url : "data/books.json",
+					type : "get",
+					success : function(json) {
+						// let json_ = JSON.parse(json);
+						// .json으로 끝나는 요청 경로는 jQuery에 이미 객체로 변환하여 반환
+						console.log(json);
+						
+						html = "";
+						html += '<table border="1">';
+						
+						for(let i = 0; i < json.length; i++) {
+							console.log(json[i].name);
+							console.log(json[i].publisher);
+							console.log(json[i].author);
+							console.log(json[i].price);
+							
+							html += "<tr>";
+							html += "<td>" + json[i].name + "</td>";
+							html += "<td>" + json[i].publisher + "</td>";
+							html += "<td>" + json[i].author + "</td>";
+							html += "<td>" + json[i].price + "</td>";
+							html += "</tr>";
+						}
+						html += "</table>";
+						$("#booksListJSON").html(html);
+					}
+					// 위 데이터들을 테이블 형태로 가공하여 id가 booksListJSON 요소에 출력하세요.
+				});
+			}
+		</script>
+		
+		
+		<button onclick="callMenuJSON()">menu json 요청</button>
+		<div id="menuListJSON"></div>
+		<!-- menu json 요청 버튼 클릭 시 jQuery ajax를 사용하여 menu.json 데이터를 가져와
+		menu xml 요청 버튼 클릭 시 출력되는 테이블과 동일하게 id가 menuListJSON인 요소에 출력하세요. -->
+		<script>
+			function callMenuJSON() {
+				$.ajax({
+					url : "data/menu.json",
+					type : "get",
+					success : function(json) {
+						let caption = json[0].name;
+						
+						html = "";
+						html += '<table border="1">';
+						html += "<caption>" + caption + "</caption>";
+						html += "<tr><th>이름</th><th>가격</th></tr>"
+						
+						for(let i = 0; i < json[0].submenu.length; i++) {
+							let name = json[0].submenu[i].name;
+							let price = json[0].submenu[i].price;
+							
+							console.log(name);
+							console.log(price);
+							
+							html += "<tr>";
+							html += "<td>" + name + "</td>";
+							html += "<td>" + price + "</td>";
+							html += "</tr>";
+						}
+						html += "</table>";
+						$("#menuListJSON").html(html);
+					}
+				});	
+			}
+		</script>
+	</body>
+</html>
